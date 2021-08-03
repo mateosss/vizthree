@@ -1,0 +1,45 @@
+{
+  "name": "vizthree",
+  "version": "1.0.0",
+  "description": "Math and graphics playground",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mateosss/vizthree.git"
+  },
+  "keywords": [
+    "3d",
+    "webgl",
+    "threejs",
+    "math",
+    "graphics"
+  ],
+  "author": "Mateo de Mayo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mateosss/vizthree/issues"
+  },
+  "homepage": "https://github.com/mateosss/vizthree#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "airbnb-base"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "rules": {}
+  }
+}
