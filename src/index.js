@@ -15,6 +15,7 @@ export default class Game {
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(this.renderer.domElement)
     this.addCube()
+    this.addLine()
     this.camera.position.z = 5
   }
 
@@ -26,14 +27,25 @@ export default class Game {
     this.cube = cube
   }
 
+  addLine() {
+    const material = new THREE.LineBasicMaterial({ color: 0xff00ff })
+    const points = []
+    points.push(new THREE.Vector3(-1, 0, 0))
+    points.push(new THREE.Vector3(1, 0, 0))
+    points.push(new THREE.Vector3(1, 1, 0))
+    const geometry = new THREE.BufferGeometry().setFromPoints(points)
+    const line = new THREE.Line(geometry, material)
+    this.scene.add(line)
+  }
+
   start() {
     this.update()
   }
 
   update() {
     requestAnimationFrame(() => this.update())
-    this.cube.rotation.x += 0.01
-    this.cube.rotation.y += 0.01
+    // this.cube.rotation.x += 0.01
+    // this.cube.rotation.y += 0.01
     this.renderer.render(this.scene, this.camera)
   }
 }
