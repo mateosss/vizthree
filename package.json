@@ -30,8 +30,11 @@
   "devDependencies": {
     "eslint": "7.32.0",
     "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.23.4",
-    "live-server": "1.2.1"
+    "eslint-plugin-prettier": "3.4.0",
+    "live-server": "1.2.1",
+    "prettier": "2.3.2"
   },
   "eslintConfig": {
     "env": {
@@ -39,12 +42,25 @@
       "es2021": true
     },
     "extends": [
-      "airbnb-base"
+      "airbnb-base",
+      "prettier"
     ],
     "parserOptions": {
       "ecmaVersion": 12,
       "sourceType": "module"
     },
-    "rules": {}
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error",
+      "no-restricted-syntax": "off",
+      "no-plusplus": "off",
+      "import/extensions": [
+        "error",
+        "always"
+      ],
+      "max-classes-per-file": "off"
+    }
   }
 }
