@@ -1,5 +1,6 @@
 // import * as THREE from 'three';
 import * as THREE from "https://cdn.skypack.dev/pin/three@v0.131.1-ABR1EJL0AQkCASkHoEad/mode=imports,min/optimized/three.js"
+import { OrbitControls } from "https://cdn.skypack.dev/three@v0.131.1/examples/jsm/controls/OrbitControls.js"
 
 export class Cube {
   constructor(game, props) {
@@ -76,6 +77,17 @@ export class Grid {
   }
 }
 
+export class OrbitControlsNode {
+  constructor(game, props) {
+    this.controls = new OrbitControls(game.camera, game.renderer.domElement)
+    this.game = game
+  }
+
+  update() {
+    this.controls.update()
+  }
+}
+
 export default class Game {
   constructor() {
     this.scene = new THREE.Scene()
@@ -95,6 +107,7 @@ export default class Game {
   start() {
     this.addChild(Cube)
     // this.addChild(Line)
+    this.addChild(OrbitControlsNode)
     this.addChild(Grid)
     this.camera.position.z = 5
 
