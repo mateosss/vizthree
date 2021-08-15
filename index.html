@@ -3,11 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
     <title>Vizthree</title>
-    <style>body { margin: 0; }</style>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .controls {
+        position: fixed;
+      }
+    </style>
   </head>
   <body>
     <script type="module" src="src/index.js"></script>
+
+    <div class="controls">
+      <input
+        type="range"
+        min="-5"
+        max="5"
+        step="0.01"
+        oninput="game.setLineToX(this.value)"
+      />
+      <input
+        type="range"
+        min="-5"
+        max="5"
+        step="0.01"
+        oninput="game.setLineToY(this.value)"
+      />
+    </div>
   </body>
 </html>

@@ -18,24 +18,42 @@ export class Cube {
   }
 }
 
+const V = ([x, y, z]) => new THREE.Vector3(x, y, z)
+
 export class Line {
-  constructor(game, { color = 0xff00ff, from = [-1, 0, 0], to = [1, 1, 0] }) {
+  constructor(
+    game,
+    { mutableProps = null, color = 0xff00ff, from = [-1, 0, 0], to = [1, 1, 0] }
+  ) {
     const material = new THREE.LineBasicMaterial({ color })
-    const a = new THREE.Vector3(...from)
-    const b = new THREE.Vector3(...to)
-    const geometry = new THREE.BufferGeometry().setFromPoints([a, b])
+    const geometry = new THREE.BufferGeometry().setFromPoints([V(from), V(to)])
     const line = new THREE.Line(geometry, material)
 
     game.scene.add(line)
     this.game = game
     this.line = line
 
-    this.color = color
-    this.from = from
-    this.to = to
+    if (mutableProps) {
+      // Fill mutableProps with default props
+      this.props = mutableProps
+      this.props.mutableProps = mutableProps
+      this.props.color = color
+      this.props.from = from
+      this.props.to = to
+    } else {
+      this.props = { mutableProps, color, from, to }
+    }
   }
 
-  update() {}
+  updateProps({ mutableProps, color, from, to }) {
+    this.props = { mutableProps, color, from, to }
+    this.line.geometry.setFromPoints([V(from), V(to)])
+    // if (color) this.line.material.color = color
+  }
+
+  update() {
+    if (this.props.mutableProps) this.updateProps(this.props.mutableProps)
+  }
 }
 
 export class Grid {
@@ -100,18 +118,27 @@ export default class Game {
     document.body.appendChild(this.renderer.domElement)
   }
 
-  addChild(Class) {
-    this.children.push(new Class(this, {}))
+  addChild(Class, props = {}) {
+    this.children.push(new Class(this, props))
   }
 
   start() {
     this.addChild(Cube)
-    // this.addChild(Line)
     this.addChild(OrbitControlsNode)
     this.addChild(Grid)
+    this.lineProps = {}
+    this.addChild(Line, { mutableProps: this.lineProps, color: 0x00ffff })
     this.camera.position.z = 5
 
     this.update()
+  }
+
+  setLineToX(x) {
+    this.lineProps.to[0] = x
+  }
+
+  setLineToY(y) {
+    this.lineProps.to[1] = y
   }
 
   update() {
@@ -123,3 +150,4 @@ export default class Game {
 
 const game = new Game()
 game.start()
+window.game = game
