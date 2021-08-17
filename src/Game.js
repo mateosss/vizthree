@@ -15,26 +15,28 @@ export default class Game {
   }
 
   addChild(Class, props = {}) {
-    this.children.push(new Class(this, props))
+    const child = new Class(this, props)
+    this.children.push(child)
+    return child
   }
 
   start() {
     this.addChild(Cube)
     this.addChild(OrbitControls)
     this.addChild(Grid)
-    this.lineProps = {}
-    this.addChild(Line, { mutableProps: this.lineProps, color: 0x00ffff })
+    this.line = this.addChild(Line, { dynamic: true, color: 0x00ffff })
+
     this.camera.position.z = 5
 
     this.update()
   }
 
   setLineToX(x) {
-    this.lineProps.to[0] = x
+    this.line.props.to[0] = x
   }
 
   setLineToY(y) {
-    this.lineProps.to[1] = y
+    this.line.props.to[1] = y
   }
 
   update() {
