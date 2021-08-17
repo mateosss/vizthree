@@ -1,13 +1,23 @@
 import * as THREE from "https://cdn.skypack.dev/pin/three@v0.131.1-ABR1EJL0AQkCASkHoEad/mode=imports,min/optimized/three.js"
 
+import Node from "./Node.js"
 import Line from "./Line.js"
 
-export default class Grid {
+export default class Grid extends Node {
   constructor(
     game,
-    { color = 0xffffff, origin = [-1, -1, 0], extent = [2, 2], spacing = 0.25 }
+    {
+      dynamic = false,
+      color = 0xffffff,
+      origin = [-1, -1, 0],
+      extent = [2, 2],
+      spacing = 0.25,
+    }
   ) {
-    this.children = []
+    const props = { dynamic, color, origin, extent, spacing }
+    super(game, props)
+
+    // Make the grid lines
     const [w, h] = extent
     const [rows, cols] = [h / spacing, w / spacing]
     const add2 = ([x, y, z], [a, b]) => [x + a, y + b, z]
@@ -27,16 +37,5 @@ export default class Grid {
       pointer = add2(pointer, [spacing, 0])
       makeLine(pointer, add2(pointer, [0, h]))
     }
-
-    this.game = game
-
-    this.color = color
-    this.origin = origin
-    this.extent = extent
-    this.spacing = spacing
-  }
-
-  update() {
-    for (const child of this.children) child.update()
   }
 }
