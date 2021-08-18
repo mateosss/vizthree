@@ -10,6 +10,25 @@ import {
   Vector,
 } from "./nodes/Nodes.js"
 
+class SumVector extends Vector {
+  constructor(game, props) {
+    console.assert(props.v instanceof Vector)
+    console.assert(props.w instanceof Vector)
+    super(game, props)
+  }
+
+  update() {
+    super.update()
+    const v = new THREE.Vector3()
+    v.fromArray(this.props.v.line.props.to)
+    const w = new THREE.Vector3()
+    w.fromArray(this.props.w.line.props.to)
+    const sum = new THREE.Vector3()
+    sum.addVectors(v, w)
+    this.line.props.to = sum.toArray()
+  }
+}
+
 export default class Game {
   constructor() {
     this.scene = new THREE.Scene()
@@ -22,8 +41,8 @@ export default class Game {
     document.body.appendChild(this.renderer.domElement)
   }
 
-  addChild(Class, props = {}) {
-    const child = new Class(this, props)
+  addChild(Class, props = {}, ...rest) {
+    const child = new Class(this, props, ...rest)
     this.children.push(child)
     return child
   }
@@ -38,6 +57,10 @@ export default class Game {
     lineProps.color = 0xffff00
     lineProps.to = [2, -1, 0]
     this.vector2 = this.addChild(Vector, lineProps)
+    lineProps.color = 0xff0000
+    lineProps.v = this.vector1
+    lineProps.w = this.vector2
+    this.sumVector = this.addChild(SumVector, lineProps)
 
     this.camera.position.z = 5
 
