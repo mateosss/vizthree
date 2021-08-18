@@ -1,7 +1,14 @@
 import * as THREE from "https://cdn.skypack.dev/pin/three@v0.131.1-ABR1EJL0AQkCASkHoEad/mode=imports,min/optimized/three.js"
 import { DragControls } from "https://cdn.skypack.dev/three@v0.131.1/examples/jsm/controls/DragControls.js"
 
-import { Cube, Line, Grid, OrbitControls, Plane } from "./nodes/Nodes.js"
+import {
+  Cube,
+  Line,
+  Grid,
+  OrbitControls,
+  Plane,
+  Vector,
+} from "./nodes/Nodes.js"
 
 export default class Game {
   constructor() {
@@ -26,20 +33,11 @@ export default class Game {
     // this.cube = this.addChild(Cube)
     this.addChild(Grid)
     const lineProps = { dynamic: true, color: 0x00ffff, linewidth: 8 }
-    this.line = this.addChild(Line, lineProps)
-    this.plane = this.addChild(Plane)
-
-    const controls = new DragControls(
-      [this.plane.plane],
-      this.camera,
-      this.renderer.domElement
-    )
-    controls.addEventListener("dragstart", (event) =>
-      console.log("dragstart", event.object)
-    )
-    controls.addEventListener("dragend", (event) =>
-      console.log("dragend", event.object)
-    )
+    // this.line = this.addChild(Line, lineProps)
+    this.vector1 = this.addChild(Vector, lineProps)
+    lineProps.color = 0xffff00
+    lineProps.to = [2, -1, 0]
+    this.vector2 = this.addChild(Vector, lineProps)
 
     this.camera.position.z = 5
 
