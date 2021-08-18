@@ -9,9 +9,9 @@ export default class Grid extends Node {
     {
       dynamic = false,
       color = 0xffffff,
-      origin = [-1, -1, 0],
-      extent = [2, 2],
-      spacing = 0.25,
+      origin = [-4, -4, 0],
+      extent = [8, 8],
+      spacing = 1,
     }
   ) {
     const props = { dynamic, color, origin, extent, spacing }

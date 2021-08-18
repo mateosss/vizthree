@@ -21,10 +21,10 @@ export default class Game {
   }
 
   start() {
-    this.addChild(Cube)
     this.addChild(OrbitControls)
     this.addChild(Grid)
-    this.line = this.addChild(Line, { dynamic: true, color: 0x00ffff })
+    const lineProps = { dynamic: true, color: 0x00ffff, linewidth: 8 }
+    this.line = this.addChild(Line, lineProps)
 
     this.camera.position.z = 5
 
