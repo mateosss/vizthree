@@ -1,6 +1,7 @@
 import * as THREE from "https://cdn.skypack.dev/pin/three@v0.131.1-ABR1EJL0AQkCASkHoEad/mode=imports,min/optimized/three.js"
+import { DragControls } from "https://cdn.skypack.dev/three@v0.131.1/examples/jsm/controls/DragControls.js"
 
-import { Cube, Line, Grid, OrbitControls } from "./nodes/Nodes.js"
+import { Cube, Line, Grid, OrbitControls, Plane } from "./nodes/Nodes.js"
 
 export default class Game {
   constructor() {
@@ -21,10 +22,24 @@ export default class Game {
   }
 
   start() {
-    this.addChild(OrbitControls)
+    // this.addChild(OrbitControls)
+    // this.cube = this.addChild(Cube)
     this.addChild(Grid)
     const lineProps = { dynamic: true, color: 0x00ffff, linewidth: 8 }
     this.line = this.addChild(Line, lineProps)
+    this.plane = this.addChild(Plane)
+
+    const controls = new DragControls(
+      [this.plane.plane],
+      this.camera,
+      this.renderer.domElement
+    )
+    controls.addEventListener("dragstart", (event) =>
+      console.log("dragstart", event.object)
+    )
+    controls.addEventListener("dragend", (event) =>
+      console.log("dragend", event.object)
+    )
 
     this.camera.position.z = 5
 
